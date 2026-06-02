@@ -1,0 +1,8 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "version": "0.2",
+    "import": ["@cspell/dict-la/cspell-ext.json"],
+    "ignorePaths": ["node_modules", "out", "package-lock.json"],
+    "language": "en,la",
+    "words": ["Akulau", "Yauheni"]
+}

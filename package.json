@@ -1,0 +1,63 @@
+{
+    "name": "compound",
+    "version": "0.1.0",
+    "description": "Building a big object",
+    "main": "out/index.js",
+    "files": [
+        "out"
+    ],
+    "exports": {
+        ".": {
+            "default": "./out/index.js",
+            "types": "./out/index.d.ts"
+        }
+    },
+    "scripts": {
+        "clear": "npm run clear:build && npm run clear:packages",
+        "clear:packages": "rimraf node_modules",
+        "clear:build": "rimraf out",
+        "format": "npx @biomejs/biome format --write",
+        "lint": "npm run lint:biome && npm run lint:md",
+        "lint:biome": "npx @biomejs/biome lint --write",
+        "lint:md": "markdownlint-cli2 --fix",
+        "check": "npm run check:cspell && npm run check:format && npm run check:lint && npm run check:types",
+        "check:cspell": "cspell .",
+        "check:format": "npx @biomejs/biome format",
+        "check:lint": "npm run check:lint:biome && npm run check:lint:md",
+        "check:lint:biome": "npx @biomejs/biome lint",
+        "check:lint:md": "markdownlint-cli2",
+        "check:types": "tsc -p ./tsconfig.json --noEmit --composite false",
+        "test": "npm run test:types && vitest",
+        "test:types": "tsc -p ./tsconfig.test.json --noEmit --composite false",
+        "build": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/y-akulau/compound.git"
+    },
+    "keywords": [
+        "typescript",
+        "javascript",
+        "context",
+        "DI",
+        "IOC",
+        "objects",
+        "dependencies"
+    ],
+    "author": "Yauheni Akulau",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/y-akulau/compound/issues"
+    },
+    "homepage": "https://github.com/y-akulau/compound#readme",
+    "devDependencies": {
+        "@biomejs/biome": "2.4.16",
+        "@cspell/dict-la": "1.1.2",
+        "@types/node": "25.9.1",
+        "cspell": "9.2.2",
+        "markdownlint-cli2": "0.22.1",
+        "rimraf": "6.0.1",
+        "typescript": "6.0.3",
+        "vitest": "4.1.8"
+    }
+}

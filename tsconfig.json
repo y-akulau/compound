@@ -1,0 +1,32 @@
+{
+    "include": ["src/**/*.ts"],
+    "exclude": ["src/**/*.test.ts", "src/**/*.fixture.ts"],
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./out",
+
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "moduleDetection": "force",
+        "esModuleInterop": true,
+        "target": "esnext",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "types": ["node"],
+
+        "sourceMap": false,
+        "declaration": true,
+        "declarationMap": false,
+        "skipLibCheck": true,
+
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+        "noPropertyAccessFromIndexSignature": true
+    }
+}
