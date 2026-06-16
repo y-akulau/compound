@@ -4,5 +4,5 @@
     "import": ["@cspell/dict-la/cspell-ext.json"],
     "ignorePaths": ["node_modules", "out", "package-lock.json"],
     "language": "en,la",
-    "words": ["Akulau", "Yauheni"]
+    "words": ["Akulau", "Dependentiarum", "Injectione", "Yauheni"]
 }
