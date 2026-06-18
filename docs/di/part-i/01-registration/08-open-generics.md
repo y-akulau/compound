@@ -1,8 +1,8 @@
 [← Back to Index](../../index.md#1-registration)
 
-# Registration — Self & Circular Dependencies
+# Registration — Open Generics
 
-> **Part I** | **Question: Registration** | *Article 2*
+> **Part I** | **Question: Registration** | *Article 8*
 
 ---
 

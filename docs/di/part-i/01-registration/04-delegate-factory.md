@@ -1,8 +1,8 @@
 [← Back to Index](../../index.md#1-registration)
 
-# Registration — Multiple Registrations
+# Registration — Delegate / Factory
 
-> **Part I** | **Question: Registration** | *Article 5*
+> **Part I** | **Question: Registration** | *Article 4*
 
 ---
 

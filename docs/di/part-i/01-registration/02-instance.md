@@ -1,8 +1,8 @@
 [← Back to Index](../../index.md#1-registration)
 
-# Registration — Open Generics
+# Registration — Instance Registration
 
-> **Part I** | **Question: Registration** | *Article 3*
+> **Part I** | **Question: Registration** | *Article 2*
 
 ---
 

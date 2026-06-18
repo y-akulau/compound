@@ -1,8 +1,8 @@
 [← Back to Index](../../index.md#1-registration)
 
-# Registration — Delegate / Factory
+# Registration — Lazy / Deferred
 
-> **Part I** | **Question: Registration** | *Article 6*
+> **Part I** | **Question: Registration** | *Article 5*
 
 ---
 

@@ -10,14 +10,14 @@
 
 ### I. Registration
 
-- [Basic Registration](part-i/01-registration/01-basic.md)
-- [Self & Circular Dependencies](part-i/01-registration/02-self-circular.md)
-- [Open Generics](part-i/01-registration/03-open-generics.md)
-- [Instance Registration](part-i/01-registration/04-instance.md)
-- [Multiple Registrations](part-i/01-registration/05-multiple.md)
-- [Delegate / Factory](part-i/01-registration/06-delegate-factory.md)
-- [Lazy / Deferred](part-i/01-registration/07-lazy-deferred.md)
-- [Conditional Registration, Profiles & Feature Flags](part-i/01-registration/08-conditional.md)
+- [Basic](part-i/01-registration/01-basic.md)
+- [Instance Registration](part-i/01-registration/02-instance.md)
+- [Multiple Registrations](part-i/01-registration/03-multiple.md)
+- [Delegate / Factory](part-i/01-registration/04-delegate-factory.md)
+- [Lazy / Deferred](part-i/01-registration/05-lazy-deferred.md)
+- [Conditional Registration, Profiles & Feature Flags](part-i/01-registration/06-conditional.md)
+- [Self & Circular Dependencies](part-i/01-registration/07-self-circular.md)
+- [Open Generics](part-i/01-registration/08-open-generics.md)
 - [Validation at Startup](part-i/01-registration/09-validation.md)
 
 ### II. Metadata

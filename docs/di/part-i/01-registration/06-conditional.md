@@ -1,8 +1,8 @@
 [← Back to Index](../../index.md#1-registration)
 
-# Registration — Instance Registration
+# Registration — Conditional, Profiles & Feature Flags
 
-> **Part I** | **Question: Registration** | *Article 4*
+> **Part I** | **Question: Registration** | *Article 6*
 
 ---
 

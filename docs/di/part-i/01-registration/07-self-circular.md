@@ -1,8 +1,8 @@
 [← Back to Index](../../index.md#1-registration)
 
-# Registration — Conditional, Profiles & Feature Flags
+# Registration — Self & Circular Dependencies
 
-> **Part I** | **Question: Registration** | *Article 8*
+> **Part I** | **Question: Registration** | *Article 7*
 
 ---
 
