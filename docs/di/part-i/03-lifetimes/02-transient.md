@@ -6,8 +6,15 @@
 
 ---
 
-**Ad primum sic proceditur.** ...
-**Videtur quod.** ...
-**Sed contra.** ...
-**Respondeo dicendum.** ...
-**Ad primum ergo dicendum.** ...
+For a new instance every time, attach a factory function and call it on demand.
+
+```ts
+import assert from "node:assert";
+import { compound } from "compound";
+
+const ctx = compound();
+
+ctx.attach("createId", () => crypto.randomUUID());
+
+assert(ctx.components.createId() !== ctx.components.createId());
+```
