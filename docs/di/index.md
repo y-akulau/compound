@@ -70,8 +70,9 @@
 
 - [Disposable](part-i/09-container/01-disposable.md)
 - [Events](part-i/09-container/02-events.md)
-- [Decorators](part-i/09-container/03-decorators.md)
-- [Interception / AOP](part-i/09-container/04-interception.md)
+- [Settings](part-i/09-container/03-settings.md)
+- [Decorators](part-i/09-container/04-decorators.md)
+- [Interception / AOP](part-i/09-container/05-interception.md)
 
 ## Part II
 
