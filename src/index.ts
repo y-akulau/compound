@@ -1,3 +1,6 @@
-export type { ComponentName, Compound } from "./compound";
-
-export { ComponentAlreadyAttached, compound } from "./compound";
+export {
+    ComponentAlreadyAttached,
+    ComponentName,
+    Compound,
+    compound,
+} from "./compound";
