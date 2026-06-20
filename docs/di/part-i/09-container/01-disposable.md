@@ -26,26 +26,31 @@ Components that implement `Symbol.dispose` / `Symbol.asyncDispose` declare their
 
 ```ts
 // app-events.ts
+import { ComponentName } from "compound";
+
+import { type Logger } from "./logger.js";
 
 // The convention can be any: Symbol.asyncDispose, "onShutdown" method, or ON_SHUTDOWN symbol.
-export async function dispose(components: Record<string, unknown>): Promise<void> {
+export async function dispose(components: Readonly<Record<string, unknown> & { logger?: Logger }>): Promise<void> {
     const errors: unknown[] = [];
-    for (const component of Object.values(components)) {
-        if (component !== null && Symbol.dispose in component) {
-            try {
-                component[Symbol.dispose]();
-            } catch (error) {
-                errors.push(error);
-            }
-        }
+    // NOTE: Or Promise.allSettled if disposal can happen in parallel.
+    for (const [name, component] of Object.entries(components)) {
+        try {
+            type Dispose = () => PromiseLike<void> | void;
+            const dispose: Dispose | undefined =
+                (component as any)?.[Symbol.dispose] ??
+                (component as any)?.[Symbol.asyncDispose];
 
-        if (component !== null && Symbol.asyncDispose in component) {
-            // NOTE: Or Promise.allSettled if disposal can happen in parallel.
-            await component[Symbol.asyncDispose]().catch(error => errors.push(error));
+            if (typeof dispose !== "function") continue;
+
+            await dispose.call(component);
+        } catch (error) {
+            components.logger?.log(`Failed to dispose a component ${ComponentName.stringify(name)}`, error);
+            errors.push(error);
         }
     }
 
-    if (error.length > 0) {
+    if (errors.length > 0) {
         throw new AggregateError(errors);
     }
 }
