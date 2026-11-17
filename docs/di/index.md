@@ -15,7 +15,7 @@
 - [Multiple Registrations](part-i/01-registration/03-multiple.md)
 - [Delegate / Factory](part-i/01-registration/04-delegate-factory.md)
 - [Lazy / Deferred](part-i/01-registration/05-lazy-deferred.md)
-- [Conditional Registration, Profiles & Feature Flags](part-i/01-registration/06-conditional.md)
+- [Conditional Registration](part-i/01-registration/06-conditional.md)
 - [Self & Circular Dependencies](part-i/01-registration/07-self-circular.md)
 - [Open Generics](part-i/01-registration/08-open-generics.md)
 - [Validation at Startup](part-i/01-registration/09-validation.md)
