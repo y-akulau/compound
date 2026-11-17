@@ -35,6 +35,19 @@ describe("Simple compound", () => {
 
         expect(c.components.a).toBe(10);
     });
+
+    it("should attach component conditionally", () => {
+        for (const condition of [true, false]) {
+            const c: Compound = compound();
+            if (condition) {
+                c.attach("a", 10);
+            } else {
+                c.attach("a", "20");
+            }
+
+            expect(c.components.a).toBe(condition ? 10 : "20");
+        }
+    });
 });
 
 describe("Derived compound", () => {

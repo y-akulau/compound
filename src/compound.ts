@@ -16,7 +16,7 @@ export interface Compound<T extends Components = {}> {
     attach<const N extends ComponentName, const C>(
         name: Unique<T, N>,
         component: C,
-    ): asserts this is Compound<C & Record<N, C>>;
+    ): asserts this is Compound<T & Record<N, C>>;
 
     derive(): Compound<T>;
 }
