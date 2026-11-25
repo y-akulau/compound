@@ -17,10 +17,10 @@ import type { B } from "./b.js";
 type Deps = Readonly<{ b: B }>;
 
 export class A {
-    #b: B;
+    private readonly b: B;
 
-    constructor(deps: Deps) {
-        this.#b = deps.b;
+    public constructor(deps: Deps) {
+        this.b = deps.b;
     }
 }
 
@@ -30,10 +30,10 @@ import type { A } from "./a.js";
 type Deps = Readonly<{ a: A }>;
 
 export class B {
-    #a: A;
+    private readonly a: A;
 
-    constructor(deps: Deps) {
-        this.#a = deps.a;
+    public constructor(deps: Deps) {
+        this.a = deps.a;
     }
 }
 
@@ -77,12 +77,12 @@ import type { B } from "./b.js";
 type Deps = Readonly<{}>;
 
 export class A {
-    #b?: B;
+    private b?: B;
 
-    constructor(deps: Deps) {}
+    public constructor(_deps: Deps) {}
 
-    setB(b: B): void {
-        this.#b = b;
+    public setB(b: B): void {
+        this.b = b;
     }
 }
 
@@ -92,10 +92,10 @@ import type { A } from "./a.js";
 type Deps = Readonly<{ a: A }>;
 
 export class B {
-    #a: A;
+    private readonly a: A;
 
-    constructor(deps: Deps) {
-        this.#a = deps.a;
+    public constructor(deps: Deps) {
+        this.a = deps.a;
     }
 }
 
@@ -133,27 +133,27 @@ const provider = <T>() => {
 }
 
 // a.ts
-import type { Holder } from "./holder.js";
+import type { B } from "./b.js";
 
 type Deps = Readonly<{
-    resolveB: () => B
+    resolveB: () => B;
 }>;
 
 export class A {
-    #resolveB: () => B;
+    private readonly resolveB: () => B;
 
-    constructor(deps: Deps) {
-        this.#resolveB = deps.resolveB;
+    public constructor(deps: Deps) {
+        this.resolveB = deps.resolveB;
     }
 
     // ...
 
-    foo() {
+    public foo(): void {
         // ...
     }
 
-    bar() {
-        this.#resolveB().baz();
+    public bar(): void {
+        this.resolveB().baz();
     }
 }
 
@@ -161,20 +161,20 @@ export class A {
 import type { A } from "./a.js";
 
 type Deps = Readonly<{
-    a: A
+    a: A;
 }>;
 
 export class B {
-    #a: A;
+    private readonly a: A;
 
-    constructor(deps: Deps) {
-        this.#a = deps.a;
+    public constructor(deps: Deps) {
+        this.a = deps.a;
     }
 
     // ...
 
-    baz() {
-        this.#a.bar();
+    public baz(): void {
+        this.a.bar();
     }
 }
 

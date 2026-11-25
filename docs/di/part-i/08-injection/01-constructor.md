@@ -23,9 +23,13 @@ type Deps = Readonly<{
 }>;
 
 export class UserService {
-    constructor(private readonly deps: Deps) {}
+    private readonly deps: Deps;
 
-    async register(email: string, password: string): Promise<void> {
+    public constructor(deps: Deps) {
+        this.deps = deps;
+    }
+
+    public async register(email: string, password: string): Promise<void> {
         const passwordHash = await this.deps.hasher.hash(password);
         await this.deps.userRepository.add(email, passwordHash);
     }

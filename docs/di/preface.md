@@ -31,16 +31,16 @@ interface AuthenticatorDeps {
 
 // Class with dependencies.
 export class Authenticator {
-    readonly #secret: string;
+    private readonly secret: string;
 
-    constructor(deps: AuthenticatorDeps) {
-        this.#secret = deps.config.jwtSecret;
+    public constructor(deps: AuthenticatorDeps) {
+        this.secret = deps.config.jwtSecret;
     }
 
-    parse(authHeader?: string): string | null {
+    public parse(authHeader?: string): string | null {
         if (!authHeader?.startsWith("Bearer ")) return null;
 
-        // Decode JWT with this.#secret — simplified.
+        // Decode JWT with this.secret — simplified.
         return "user_123";
     }
 }

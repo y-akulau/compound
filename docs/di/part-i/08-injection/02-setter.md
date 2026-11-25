@@ -49,10 +49,10 @@ The same idea through a setter:
 
 ```ts
 export class UserService {
-    #logger: ILogger | undefined;
+    private logger: ILogger | undefined;
 
-    set logger(logger: ILogger) {
-        this.#logger = logger;
+    public set logger(logger: ILogger) {
+        this.logger = logger;
     }
 }
 ```
@@ -63,10 +63,10 @@ Or through an initialization method:
 
 ```ts
 export class UserService {
-    #logger: ILogger | undefined;
+    private logger: ILogger | undefined;
 
-    setLogger(logger: ILogger): void {
-        this.#logger = logger;
+    public setLogger(logger: ILogger): void {
+        this.logger = logger;
     }
 }
 ```

@@ -60,17 +60,17 @@ import { Pool, type PoolConfig } from "pg";
 import { start } from "./app-events.js";
 
 export class Db {
-    #pool: Pool;
+    private readonly pool: Pool;
 
-    constructor(deps: { readonly config: { readonly db: PoolConfig } }) {
-        this.#pool = new Pool(deps.config.db);
+    public constructor(deps: { readonly config: { readonly db: PoolConfig } }) {
+        this.pool = new Pool(deps.config.db);
     }
 
-    async start() {
-        await this.#migrate();
+    public async start(): Promise<void> {
+        await this.migrate();
     }
 
-    async #migrate() {
+    private async migrate(): Promise<void> {
         // ...
     }
 }
@@ -89,13 +89,13 @@ By extending a base class, a component declares its role in the application. The
 ```ts
 // background-worker.ts
 export abstract class BackgroundWorker {
-    async [Symbol.asyncDispose](): Promise<void> {
+    public async [Symbol.asyncDispose](): Promise<void> {
         await this.stop();
     }
 
-    abstract start(): Promise<void>;
+    public abstract start(): Promise<void>;
 
-    abstract stop(): Promise<void>;
+    public abstract stop(): Promise<void>;
 }
 ```
 
@@ -104,19 +104,19 @@ import { connect, type Connection } from "amqplib";
 
 // queue-consumer.worker.ts
 export class QueueConsumer extends BackgroundWorker {
-    #amqpUrl: string;
-    #connection: Connection | null = null;
+    private readonly amqpUrl: string;
+    private connection: Connection | null = null;
 
-    constructor(deps: {
-        readonly config: { readonly amqpUrl: string },
+    public constructor(deps: {
+        readonly config: { readonly amqpUrl: string };
     }) {
         super();
-        this.#amqpUrl = deps.config.amqpUrl;
+        this.amqpUrl = deps.config.amqpUrl;
     }
 
-    async start(): Promise<void> {
-        const connection = await connect(this.#amqpUrl);
-        this.#connection = connection;
+    public override async start(): Promise<void> {
+        const connection = await connect(this.amqpUrl);
+        this.connection = connection;
 
         const channel = await connection.createChannel();
         await channel.consume("ch1", (message) => {
@@ -124,9 +124,9 @@ export class QueueConsumer extends BackgroundWorker {
         });
     }
 
-    async stop(): Promise<void> {
-        await this.#connection?.close();
-        this.#connection = null;
+    public override async stop(): Promise<void> {
+        await this.connection?.close();
+        this.connection = null;
     }
 }
 ```
