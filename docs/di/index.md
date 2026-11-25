@@ -62,9 +62,7 @@
 ### VIII. Injection
 
 - [Constructor Injection](part-i/08-injection/01-constructor.md)
-- [Field Injection](part-i/08-injection/02-field.md)
-- [Property Injection](part-i/08-injection/03-property.md)
-- [Method Injection](part-i/08-injection/04-method.md)
+- [Setter Injection](part-i/08-injection/02-setter.md)
 
 ### IX. Container
 
