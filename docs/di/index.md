@@ -63,6 +63,7 @@
 
 - [Constructor Injection](part-i/08-injection/01-constructor.md)
 - [Setter Injection](part-i/08-injection/02-setter.md)
+- [Context Injection](part-i/08-injection/03-context.md)
 
 ### IX. Container
 
