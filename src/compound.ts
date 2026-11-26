@@ -68,9 +68,9 @@ export class SimpleCompound<T extends Components = {}> implements Compound<T> {
 export class DerivedCompound<B extends Components, T extends Components = {}>
     implements Compound<B & T>
 {
-    #components;
+    #components: Components;
 
-    #reader;
+    #reader: Readonly<B & T>;
     get components() {
         return this.#reader;
     }
