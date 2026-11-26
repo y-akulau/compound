@@ -24,15 +24,15 @@ const Config = z.object({
     })
 });
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 const raw = JSON.parse(readFileSync("config.json", "utf-8"));
 const config = Config.parse(raw);
-ctx.attach("config", config);
+app.attach("config", config);
 
-const pool = new Pool(ctx.components.config.db);
+const pool = new Pool(app.components.config.db);
 pool.on("error", (err) => console.error("pool error", err));
-ctx.attach("db", pool);
+app.attach("db", pool);
 ```
 
 ## Async component creation
@@ -51,13 +51,13 @@ const Config = z.object({
     })
 });
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 const raw = JSON.parse(await readFile("config.json", "utf-8"));
 const config = await Config.parseAsync(raw);
-ctx.attach("config", config);
+app.attach("config", config);
 
-ctx.attach("db", new Pool(ctx.components.config.db);
+app.attach("db", new Pool(app.components.config.db);
 ```
 
 ## Registering actual factories
@@ -68,13 +68,13 @@ When deferred creation is needed, attach a function.
 import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
 
-ctx.attach("createClient", async () => await ctx.components.db.connect());
+app.attach("createClient", async () => await app.components.db.connect());
 
-const client = await ctx.components.createClient();
+const client = await app.components.createClient();
 // ...
 client.release();
 ```

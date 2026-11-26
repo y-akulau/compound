@@ -34,12 +34,12 @@ import { SimpleCompound } from "compound";
 import { UserService } from "./app/user-service.js";
 import { ConsoleLogger } from "./infra/console-logger.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("logger", new ConsoleLogger(ctx.components));
+app.attach("logger", new ConsoleLogger(app.components));
 
-ctx.attach("userService", new UserService(ctx.components));
-ctx.components.userService.logger = ctx.components.logger;
+app.attach("userService", new UserService(app.components));
+app.components.userService.logger = app.components.logger;
 
 ```
 

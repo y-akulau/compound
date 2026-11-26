@@ -51,12 +51,12 @@ import { Notifier } from "./app/notifier.js";
 import { SendGrid } from "./infra/email/send-grid.js";
 import { Smtp } from "./infra/email/smtp.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("smtp", new Smtp("smtp://localhost"));
-ctx.attach("sendGrid", new SendGrid("SG.xxx"));
+app.attach("smtp", new Smtp("smtp://localhost"));
+app.attach("sendGrid", new SendGrid("SG.xxx"));
 
-ctx.attach("notifier", new Notifier(ctx.components));
+app.attach("notifier", new Notifier(app.components));
 ```
 
 ## Symbols
@@ -100,11 +100,11 @@ type Deps = Readonly<{
 }>;
 
 export const MqttModule = (deps: Compound<Deps>) => {
-    const ctx = deps.derive();
+    const module = deps.derive();
 
-    ctx.attach("client", new MqttClient(ctx.components));
+    module.attach("client", new MqttClient(module.components));
 
-    return ctx.getOwnComponents();
+    return module.getOwnComponents();
 };
 ```
 
@@ -115,12 +115,12 @@ import { SimpleCompound } from "compound";
 import { MQTT_CONFIG } from "./mqtt/client.js";
 import { MqttModule } from "./mqtt/module.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach(MQTT_CONFIG, { url: "mqtt://localhost:1883" });
-ctx.attach("mqtt", MqttModule(ctx.components));
+app.attach(MQTT_CONFIG, { url: "mqtt://localhost:1883" });
+app.attach("mqtt", MqttModule(app.components));
 
-await ctx.components.mqtt.client.connect();
+await app.components.mqtt.client.connect();
 ```
 
 The module owns `MQTT_CONFIG`, so the caller provides that exact key.

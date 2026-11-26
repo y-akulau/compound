@@ -12,13 +12,13 @@ The application can call relevant methods of the components in response to event
 import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
+const app: SimpleCompound = new SimpleCompound();
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
 
 // ...
 
 // On the application shutdown.
-await ctx.components.db.end();
+await app.components.db.end();
 ```
 
 ## Convention
@@ -75,11 +75,11 @@ export class Db {
     }
 }
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("config", { db: { connectionString: "postgres://..." } });
-ctx.attach("db", new Db(ctx.components));
+const app: SimpleCompound = new SimpleCompound();
+app.attach("config", { db: { connectionString: "postgres://..." } });
+app.attach("db", new Db(app.components));
 
-await start(ctx.components);
+await start(app.components);
 ```
 
 ## Base class
@@ -164,13 +164,13 @@ import { SimpleCompound } from "compound";
 
 import { startWorkers, dispose } from "./app-events.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("config", { amqpUrl: "amqp://localhost" });
-ctx.attach("queueConsumer", new QueueConsumer(ctx.components));
+const app: SimpleCompound = new SimpleCompound();
+app.attach("config", { amqpUrl: "amqp://localhost" });
+app.attach("queueConsumer", new QueueConsumer(app.components));
 
-await startWorkers(ctx.components);
+await startWorkers(app.components);
 
 // ...
 
-await dispose(ctx.components);
+await dispose(app.components);
 ```

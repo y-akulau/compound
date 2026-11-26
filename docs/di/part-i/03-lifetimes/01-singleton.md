@@ -14,9 +14,9 @@ import { SimpleCompound } from "compound";
 
 import { Logger } from "./logger.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("logger", new Logger());
+app.attach("logger", new Logger());
 
-assert(ctx.components.logger === ctx.components.logger);
+assert(app.components.logger === app.components.logger);
 ```

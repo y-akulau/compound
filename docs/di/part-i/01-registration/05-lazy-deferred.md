@@ -44,12 +44,12 @@ import { Redis } from "ioredis";
 import { lazy } from "./utils/lazy.js";
 import { SimpleCompound } from "compound";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("getRedis", lazy(() => new Redis("redis://...")));
+app.attach("getRedis", lazy(() => new Redis("redis://...")));
 
-const redis = ctx.components.getRedis();
-const same = ctx.components.getRedis();
+const redis = app.components.getRedis();
+const same = app.components.getRedis();
 assert(redis === same);
 ```
 
@@ -63,13 +63,13 @@ import { SimpleCompound } from "compound";
 
 import { lazy } from "./utils/lazy.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 // Factory — fresh value each call.
-ctx.attach("createId", () => crypto.randomUUID());
-assert(ctx.components.createId() !== ctx.components.createId());
+app.attach("createId", () => crypto.randomUUID());
+assert(app.components.createId() !== app.components.createId());
 
 // Lazy — computed once, cached.
-ctx.attach("getId", lazy(() => crypto.randomUUID()));
-assert(ctx.components.getId() === ctx.components.getId());
+app.attach("getId", lazy(() => crypto.randomUUID()));
+assert(app.components.getId() === app.components.getId());
 ```

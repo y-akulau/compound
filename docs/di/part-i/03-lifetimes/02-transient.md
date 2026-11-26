@@ -12,9 +12,9 @@ For a new instance every time, attach a factory function and call it on demand.
 import assert from "node:assert";
 import { SimpleCompound } from "compound";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("createId", () => crypto.randomUUID());
+app.attach("createId", () => crypto.randomUUID());
 
-assert(ctx.components.createId() !== ctx.components.createId());
+assert(app.components.createId() !== app.components.createId());
 ```

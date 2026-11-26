@@ -35,10 +35,10 @@ import { createUser } from "./app/create-user.js";
 import { PostgresUserRepository } from "./infra/user-repository.js";
 import { BcryptHasher } from "./infra/hasher.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("userRepository", new PostgresUserRepository(ctx.components));
-ctx.attach("hasher", new BcryptHasher(ctx.components));
+app.attach("userRepository", new PostgresUserRepository(app.components));
+app.attach("hasher", new BcryptHasher(app.components));
 
 const createUserRequestSchema = z.object({
     email: z.string().email(),
@@ -63,7 +63,7 @@ const server = createServer(async (request, response) => {
             return;
         }
 
-        await createUser(ctx.components, parsed.data.email, parsed.data.password);
+        await createUser(app.components, parsed.data.email, parsed.data.password);
 
         response.writeHead(201);
         response.end();

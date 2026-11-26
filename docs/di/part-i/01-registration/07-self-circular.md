@@ -42,9 +42,9 @@ import { SimpleCompound, type Compound } from "compound";
 
 import { A } from "./a.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("a", new A(ctx.components)); // Type error: `b` is missing
+app.attach("a", new A(app.components)); // Type error: `b` is missing
 ```
 
 And then:
@@ -56,10 +56,10 @@ import { SimpleCompound, type Compound } from "compound";
 import { A } from "./a.js";
 import { B } from "./b.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("b", new B(ctx.components)); // Type error: `a` is missing
-ctx.attach("a", new A(ctx.components));
+app.attach("b", new B(app.components)); // Type error: `a` is missing
+app.attach("a", new A(app.components));
 ```
 
 The error is the feature: dependency order is checked while wiring the object, not at runtime.
@@ -105,11 +105,11 @@ import { SimpleCompound, type Compound } from "compound";
 import { A } from "./a.js";
 import { B } from "./b.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("a", new A(ctx.components));
-ctx.attach("b", new B(ctx.components));
-ctx.components.a.setB(ctx.components.b);
+app.attach("a", new A(app.components));
+app.attach("b", new B(app.components));
+app.components.a.setB(app.components.b);
 ```
 
 A mutable holder works the same way: attach the holder early, attach both services, then fill the holder after both values exist.
@@ -185,14 +185,14 @@ import { A } from "./a.js";
 import { B } from "./b.js";
 import { Holder } from "./holder.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 const b = provider<B>();
 
-ctx.attach("resolveB", b.resolve);
-ctx.attach("a", new A(ctx.components));
-ctx.attach("b", new B(ctx.components));
-b.provide(ctx.components.b);
+app.attach("resolveB", b.resolve);
+app.attach("a", new A(app.components));
+app.attach("b", new B(app.components));
+b.provide(app.components.b);
 ```
 
 ## Proxy
@@ -236,15 +236,15 @@ import { A } from "./a.js";
 import { B } from "./b.js";
 import { Lateinit } from "./utils/lateinit.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-const late: typeof ctx = ctx.derive();
+const late: typeof app = app.derive();
 const b = lateinit<B>();
 late.attach("b", b.value);
-ctx.attach("a", new A(late.components));
+app.attach("a", new A(late.components));
 
-ctx.attach("b", new B(ctx.components));
-b.init(ctx.components.b);
+app.attach("b", new B(app.components));
+b.init(app.components.b);
 ```
 
 The proxy preserves the declared interface, binds method calls to the resolved target, and throws if used too early. Its identity is still different from the target, so identity checks, `Object.keys`, and APIs that inspect own properties are fragile.

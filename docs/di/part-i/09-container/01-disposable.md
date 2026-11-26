@@ -12,12 +12,12 @@ Nothing is disposed automatically — the application decides when and how to cl
 import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
+const app: SimpleCompound = new SimpleCompound();
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
 
 // ...
 
-await ctx.components.db.end();
+await app.components.db.end();
 ```
 
 ## Dispose by convention
@@ -62,11 +62,11 @@ import { Worker } from "node:worker_threads";
 
 import { dispose } from "./app-events.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("emailJob", new Worker("./scripts/email-job.js"));
-ctx.attach("exportJob", new Worker("./scripts/export-job.js"));
+const app: SimpleCompound = new SimpleCompound();
+app.attach("emailJob", new Worker("./scripts/email-job.js"));
+app.attach("exportJob", new Worker("./scripts/export-job.js"));
 
-await dispose(ctx.components);
+await dispose(app.components);
 ```
 
 ## Cleanup as component
@@ -79,13 +79,13 @@ import { Pool } from "pg";
 
 import { dispose } from "./app-events.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
-ctx.attach("db.end", {
-    [Symbol.asyncDispose]: async () => await ctx.components.db.end(),
+const app: SimpleCompound = new SimpleCompound();
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
+app.attach("db.end", {
+    [Symbol.asyncDispose]: async () => await app.components.db.end(),
 });
 
 // ...
 
-await dispose(ctx.components);
+await dispose(app.components);
 ```

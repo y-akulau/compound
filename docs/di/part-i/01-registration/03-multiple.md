@@ -73,12 +73,12 @@ import { Smtp } from "./infra/smtp.js";
 import { SendGrid } from "./infra/send-grid.js";
 import { Notifier } from "./infra/notification.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("primaryEmail", new Smtp());
-ctx.attach("backupEmail", new SendGrid());
+app.attach("primaryEmail", new Smtp());
+app.attach("backupEmail", new SendGrid());
 
-ctx.attach("notifier", new Notifier(ctx.components));
+app.attach("notifier", new Notifier(app.components));
 ```
 
 ## Array component
@@ -247,20 +247,20 @@ import { CreatePostsMigration } from "./db/migrations/003-create-posts.js";
 
 import type { IMigration } from "./db/migration.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
 
 const migrations: IMigration[] = [];
-ctx.attach("migrations", migrations);
+app.attach("migrations", migrations);
 
 migrations.push(new CreateUsersMigration());
 migrations.push(new AddRolesMigration());
 migrations.push(new CreatePostsMigration());
 
-ctx.attach("migrator", new Migrator(ctx.components));
+app.attach("migrator", new Migrator(app.components));
 
-await ctx.components.migrator.migrate();
+await app.components.migrator.migrate();
 ```
 
 ## Collecting by convention
@@ -318,19 +318,19 @@ import { CreateUsersMigration } from "./db/migrations/001-create-users.js";
 import { AddRolesMigration } from "./db/migrations/002-add-roles.js";
 import { CreatePostsMigration } from "./db/migrations/003-create-posts.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
 
-ctx.attach("createUsersMigration", new CreateUsersMigration());
-ctx.attach("addRolesMigrations", new AddRolesMigration());
-ctx.attach("createPostsMigrations", new CreatePostsMigration());
+app.attach("createUsersMigration", new CreateUsersMigration());
+app.attach("addRolesMigrations", new AddRolesMigration());
+app.attach("createPostsMigrations", new CreatePostsMigration());
 
-ctx.attach("migrations", Object.values(ctx.components).filter(
+app.attach("migrations", Object.values(app.components).filter(
     (v): v is Migration => v instanceof Migration,
 ));
 
-ctx.attach("migrator", new Migrator(ctx.components));
+app.attach("migrator", new Migrator(app.components));
 
-await ctx.components.migrator.migrate();
+await app.components.migrator.migrate();
 ```

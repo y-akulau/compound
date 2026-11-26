@@ -44,11 +44,11 @@ import { UserService } from "./app/user-service.js";
 import { PostgresUserRepository } from "./infra/user-repository.js";
 import { BcryptHasher } from "./infra/hasher.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("userRepository", new PostgresUserRepository(ctx.components));
-ctx.attach("hasher", new BcryptHasher());
-ctx.attach("userService", new UserService(ctx.components));
+app.attach("userRepository", new PostgresUserRepository(app.components));
+app.attach("hasher", new BcryptHasher());
+app.attach("userService", new UserService(app.components));
 ```
 
 ## Functions
@@ -75,5 +75,5 @@ export const createUserService = (deps: Deps) => ({
 
 ```ts
 // main.ts
-ctx.attach("userService", createUserService(ctx.components));
+app.attach("userService", createUserService(app.components));
 ```

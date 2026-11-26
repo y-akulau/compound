@@ -22,9 +22,9 @@ type EmailConfig =
     | { readonly provider: "smtp"; readonly url: string }
     | { readonly provider: "sendGrid"; readonly apiKey: string };
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("config", {
+app.attach("config", {
     email: {
         provider: "smtp",
         url: "smtp://localhost",
@@ -33,8 +33,8 @@ ctx.attach("config", {
 
 // ...
 
-const emailConfig = ctx.config.email;
-ctx.attach(
+const emailConfig = app.components.config.email;
+app.attach(
     "emailSender",
     emailConfig.provider === "smtp"
         ? new Smtp(emailConfig.url)
@@ -45,11 +45,11 @@ ctx.attach(
 Or with `if` statement:
 
 ```ts
-const emailConfig = ctx.config.email;
+const emailConfig = app.components.config.email;
 if (emailConfig.provider === "smtp") {
-    ctx.attach("emailSender", new Smtp(emailConfig.url));
+    app.attach("emailSender", new Smtp(emailConfig.url));
 } else {
-    ctx.attach("emailSender", new SendGrid(emailConfig.apiKey));
+    app.attach("emailSender", new SendGrid(emailConfig.apiKey));
 }
 ```
 
@@ -96,16 +96,16 @@ import { SimpleCompound, type Compound } from "compound";
 import { emailConfig } from "./infra/email/config.js";
 import { createEmailSender } from "./infra/email/factory.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("config", {
+app.attach("config", {
     email: {
         provider: "smtp",
         url: "smtp://localhost",
     } satisfies EmailConfig,
 });
 
-ctx.attach("emailSender", createEmailSender(ctx.components));
+app.attach("emailSender", createEmailSender(app.components));
 ```
 
 ## Optional
@@ -119,15 +119,15 @@ import { SimpleCompound, type Compound } from "compound";
 import type { Metrics } from "./app/metrics.js";
 import { CloudMetrics } from "./infra/cloud-metrics.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("config", {
+app.attach("config", {
     metrics: true
 });
 
 // ...
 
-ctx.attach("metrics", ctx.config.metrics ? new CloudMetrics() : undefined);
+app.attach("metrics", app.components.config.metrics ? new CloudMetrics() : undefined);
 
 // ...
 
@@ -143,7 +143,7 @@ const createHandler = (deps: HandlerDeps): Handler => {
     };
 };
 
-ctx.attach("handler", createHandler(ctx.components));
+app.attach("handler", createHandler(app.components));
 ```
 
 Or alternatively use `null object`:
@@ -153,5 +153,5 @@ const noMetrics: Metrics = {
     flush: () => Promise.resolve();
 };
 
-ctx.attach("metrics", ctx.config.metrics ? new CloudMetrics() : noMetrics);
+app.attach("metrics", app.components.config.metrics ? new CloudMetrics() : noMetrics);
 ```

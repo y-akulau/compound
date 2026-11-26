@@ -6,34 +6,34 @@
 
 ---
 
-`attach` stores the value as-is. The exact reference passed to `attach` is what `ctx.components[name]` returns — no wrapping, no proxying, no deferred creation.
+`attach` stores the value as-is. The exact reference passed to `attach` is what `app.components[name]` returns — no wrapping, no proxying, no deferred creation.
 
 ## Instance identity
 
 ```ts
 import { SimpleCompound } from "compound";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 const obj = { x: 1 };
-ctx.attach("obj", obj);
+app.attach("obj", obj);
 
-ctx.components.obj === obj; // true
+app.components.obj === obj; // true
 ```
 
 ## Mutable instances
 
-`ctx.components` is read-only (reassigning or deleting properties throws), but the attached **value** itself can be mutated.
+`app.components` is read-only (reassigning or deleting properties throws), but the attached **value** itself can be mutated.
 
 ```ts
 import { SimpleCompound } from "compound";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 const items = [1];
-ctx.attach("items", items);
+app.attach("items", items);
 
-ctx.components.items.push(2);
+app.components.items.push(2);
 // `items` is now [1, 2].
 ```
 
@@ -45,8 +45,8 @@ The instance is constructed at the `attach` call site, not deferred until access
 import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
 // Pool is constructed here, not later on access.
-ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
+app.attach("db", new Pool({ connectionString: "postgres://..." }));
 ```

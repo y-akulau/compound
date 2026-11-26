@@ -13,12 +13,12 @@ Despite the conventional DI term, `attach` does not register a component in the 
 ```ts
 import { SimpleCompound } from "compound";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("logger", console);
-ctx.attach("port", 3000);
+app.attach("logger", console);
+app.attach("port", 3000);
 
-ctx.components.logger.log(ctx.components.port);
+app.components.logger.log(app.components.port);
 ```
 
 ## Symbol names
@@ -29,22 +29,22 @@ import { Pool } from "pg";
 
 const DB = Symbol("db");
 
-ctx.attach(DB, new Pool());
+app.attach(DB, new Pool());
 
-ctx.components[DB];
+app.components[DB];
 ```
 
 ## Dependent component
 
 ```ts
-ctx.attach("config", {
+app.attach("config", {
     db: {
         url: "postgres://..."
     },
 });
 
 // `config` is already there!
-ctx.attach("pool", new Pool(ctx.components.config.db));
+app.attach("pool", new Pool(app.components.config.db));
 ```
 
 ## Class tree
@@ -143,21 +143,21 @@ import { UserService } from "./app/user-service.js";
 import { PostgresUserRepository } from "./infra/user-repository.js";
 import { BcryptHasher } from "./infra/hasher.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
+const app: SimpleCompound = new SimpleCompound();
 
-ctx.attach("config", { dbUrl: "postgres://..." });
-ctx.attach("db", new Pool(ctx.components.config.dbUrl));
-ctx.attach("userRepository", new PostgresUserRepository(ctx.components));
-ctx.attach("hasher", new BcryptHasher());
-ctx.attach("userService", new UserService(ctx.components));
+app.attach("config", { dbUrl: "postgres://..." });
+app.attach("db", new Pool(app.components.config.dbUrl));
+app.attach("userRepository", new PostgresUserRepository(app.components));
+app.attach("hasher", new BcryptHasher());
+app.attach("userService", new UserService(app.components));
 ```
 
 ## Re-attachment is rejected
 
 ```ts
-ctx.attach("a", 1);
+app.attach("a", 1);
 
 // Compilation error: Argument of type '"a"' is not assignable to parameter of type 'never'.
 // Runtime: ComponentAlreadyAttached is thrown.
-ctx.attach("a", 2);
+app.attach("a", 2);
 ```

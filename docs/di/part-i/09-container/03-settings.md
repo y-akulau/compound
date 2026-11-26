@@ -55,6 +55,6 @@ export async function parseConfig() {
 import { SimpleCompound } from "compound";
 import { parseConfig } from "./config.js";
 
-const ctx: SimpleCompound = new SimpleCompound();
-ctx.attach("config", await parseConfig());
+const app: SimpleCompound = new SimpleCompound();
+app.attach("config", await parseConfig());
 ```
