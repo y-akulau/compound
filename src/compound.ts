@@ -1,4 +1,5 @@
 import { readonly } from "./utils/readonly";
+import type { Unique } from "./utils/unique";
 
 export type ComponentName = string | symbol;
 export namespace ComponentName {
@@ -7,8 +8,6 @@ export namespace ComponentName {
 }
 
 export type Components = Record<ComponentName, unknown>;
-
-type Unique<T, N> = N extends keyof T ? never : N;
 
 export interface Compound<T extends Components = {}> {
     readonly components: Readonly<T>;
