@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, it } from "vitest";
 import {
     ComponentAlreadyAttached,
     type ComponentsOf,
-    type DerivedCompound,
+    DerivedCompound,
     type DerivedCompoundFrom,
     type OwnComponentsOf,
     SimpleCompound,
@@ -118,6 +118,22 @@ describe("DerivedCompound", () => {
         expect(c2.components.a).toBe(10);
         expect(c2.components.b).toBe(20);
         expect(c2.components.c).toBe(30);
+    });
+
+    it("should derive from an object", () => {
+        const c = { a: 10 };
+
+        const c1: DerivedCompound<typeof c> = new DerivedCompound(c);
+        c1.attach("b", 20);
+
+        expect(c1.components.a).toBe(10);
+        expect(c1.components.b).toBe(20);
+
+        const c2: DerivedCompound<typeof c> = new DerivedCompound(c);
+        c2.attach("b", 30);
+
+        expect(c2.components.a).toBe(10);
+        expect(c2.components.b).toBe(30);
     });
 
     it("should not allow to override a base component", () => {
