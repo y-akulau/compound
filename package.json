@@ -8,8 +8,8 @@
     ],
     "exports": {
         ".": {
-            "default": "./out/index.js",
-            "types": "./out/index.d.ts"
+            "default": "./out/compound/index.js",
+            "types": "./out/compound/index.d.ts"
         }
     },
     "scripts": {
