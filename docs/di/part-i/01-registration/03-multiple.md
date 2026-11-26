@@ -67,13 +67,13 @@ export class Notifier {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { Smtp } from "./infra/smtp.js";
 import { SendGrid } from "./infra/send-grid.js";
 import { Notifier } from "./infra/notification.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("primaryEmail", new Smtp());
 ctx.attach("backupEmail", new SendGrid());
@@ -237,7 +237,7 @@ export class Migrator {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
 import { Migrator } from "./db/migrator.js";
@@ -247,7 +247,7 @@ import { CreatePostsMigration } from "./db/migrations/003-create-posts.js";
 
 import type { IMigration } from "./db/migration.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
 
@@ -309,7 +309,7 @@ export class CreatePostsMigration extends Migration {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
 import { Migration } from "./db/migration.js";
@@ -318,7 +318,7 @@ import { CreateUsersMigration } from "./db/migrations/001-create-users.js";
 import { AddRolesMigration } from "./db/migrations/002-add-roles.js";
 import { CreatePostsMigration } from "./db/migrations/003-create-posts.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
 

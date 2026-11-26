@@ -28,14 +28,14 @@ export const createUser = async (ctx: Context, email: string, password: string):
 // main.ts
 import { createServer } from "node:http";
 
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { z } from "zod";
 
 import { createUser } from "./app/create-user.js";
 import { PostgresUserRepository } from "./infra/user-repository.js";
 import { BcryptHasher } from "./infra/hasher.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("userRepository", new PostgresUserRepository(ctx.components));
 ctx.attach("hasher", new BcryptHasher(ctx.components));

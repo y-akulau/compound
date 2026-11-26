@@ -13,7 +13,7 @@ Components are created manually to add to `compound`, so no special mechanism (f
 Write any code before `attach` — no special API needed.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 import { readFileSync } from "fs";
 import { z } from "zod";
@@ -24,7 +24,7 @@ const Config = z.object({
     })
 });
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 const raw = JSON.parse(readFileSync("config.json", "utf-8"));
 const config = Config.parse(raw);
@@ -40,7 +40,7 @@ ctx.attach("db", pool);
 `await` before `attach` — same pattern.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 import { readFile } from "fs/promises";
 import { z } from "zod";
@@ -51,7 +51,7 @@ const Config = z.object({
     })
 });
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 const raw = JSON.parse(await readFile("config.json", "utf-8"));
 const config = await Config.parseAsync(raw);
@@ -65,10 +65,10 @@ ctx.attach("db", new Pool(ctx.components.config.db);
 When deferred creation is needed, attach a function.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
 

@@ -82,12 +82,12 @@ export const getProfile = async ({ logger, db, userId }: Context) => {
 // main.ts
 import { createServer } from "node:http";
 import { Pool } from "pg";
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { Authenticator } from "./auth.js";
 import { getProfile } from "./use-cases/get-profile.js";
 
-const app: Compound = compound();
+const app: SimpleCompound = new SimpleCompound();
 
 // Custom object.
 app.attach("config", {

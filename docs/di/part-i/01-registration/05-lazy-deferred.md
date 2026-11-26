@@ -42,9 +42,9 @@ import assert from "node:assert";
 import { Redis } from "ioredis";
 
 import { lazy } from "./utils/lazy.js";
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("getRedis", lazy(() => new Redis("redis://...")));
 
@@ -59,11 +59,11 @@ A factory returns a fresh value on every call. A lazy thunk computes once and ca
 
 ```ts
 import assert from "node:assert";
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { lazy } from "./utils/lazy.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 // Factory — fresh value each call.
 ctx.attach("createId", () => crypto.randomUUID());

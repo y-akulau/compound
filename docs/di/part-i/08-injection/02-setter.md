@@ -29,12 +29,12 @@ export class UserService {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { UserService } from "./app/user-service.js";
 import { ConsoleLogger } from "./infra/console-logger.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("logger", new ConsoleLogger(ctx.components));
 

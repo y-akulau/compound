@@ -11,9 +11,9 @@
 ## Instance identity
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 const obj = { x: 1 };
 ctx.attach("obj", obj);
@@ -26,9 +26,9 @@ ctx.components.obj === obj; // true
 `ctx.components` is read-only (reassigning or deleting properties throws), but the attached **value** itself can be mutated.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 const items = [1];
 ctx.attach("items", items);
@@ -42,10 +42,10 @@ ctx.components.items.push(2);
 The instance is constructed at the `attach` call site, not deferred until access.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 // Pool is constructed here, not later on access.
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));

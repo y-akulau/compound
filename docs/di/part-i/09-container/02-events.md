@@ -9,10 +9,10 @@ The application can call relevant methods of the components in response to event
 ## Manual
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
 
 // ...
@@ -27,7 +27,7 @@ Components can expose a method to handle an event. A single utility call finds t
 
 ```ts
 // app-events.ts
-import { ComponentName } from "compound";
+import { SimpleCompound, ComponentName } from "compound";
 
 import { type Logger } from "./logger.js";
 
@@ -54,7 +54,7 @@ export async function start(components: Readonly<Record<string, unknown> & { log
 ```
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool, type PoolConfig } from "pg";
 
 import { start } from "./app-events.js";
@@ -75,7 +75,7 @@ export class Db {
     }
 }
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("config", { db: { connectionString: "postgres://..." } });
 ctx.attach("db", new Db(ctx.components));
 
@@ -133,7 +133,7 @@ export class QueueConsumer extends BackgroundWorker {
 
 ```ts
 // app-events.ts
-import { ComponentName } from "compound";
+import { SimpleCompound, ComponentName } from "compound";
 
 import { type Logger } from "./logger.js";
 import { BackgroundWorker } from "./background-worker.js";
@@ -160,11 +160,11 @@ export async function startWorkers(components: Readonly<Record<string, unknown> 
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { startWorkers, dispose } from "./app-events.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("config", { amqpUrl: "amqp://localhost" });
 ctx.attach("queueConsumer", new QueueConsumer(ctx.components));
 

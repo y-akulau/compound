@@ -10,9 +10,9 @@ For a new instance every time, attach a factory function and call it on demand.
 
 ```ts
 import assert from "node:assert";
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("createId", () => crypto.randomUUID());
 

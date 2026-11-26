@@ -10,11 +10,11 @@ Every component in `compound` is a singleton — `attach` stores a value, and th
 
 ```ts
 import assert from "node:assert";
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { Logger } from "./logger.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("logger", new Logger());
 

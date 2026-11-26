@@ -38,11 +38,11 @@ export class B {
 }
 
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { A } from "./a.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("a", new A(ctx.components)); // Type error: `b` is missing
 ```
@@ -51,12 +51,12 @@ And then:
 
 ```ts
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { A } from "./a.js";
 import { B } from "./b.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("b", new B(ctx.components)); // Type error: `a` is missing
 ctx.attach("a", new A(ctx.components));
@@ -100,12 +100,12 @@ export class B {
 }
 
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { A } from "./a.js";
 import { B } from "./b.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("a", new A(ctx.components));
 ctx.attach("b", new B(ctx.components));
@@ -179,13 +179,13 @@ export class B {
 }
 
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { A } from "./a.js";
 import { B } from "./b.js";
 import { Holder } from "./holder.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 const b = provider<B>();
 
@@ -230,13 +230,13 @@ export const lateinit = <T extends object>() => {
 };
 
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { A } from "./a.js";
 import { B } from "./b.js";
 import { Lateinit } from "./utils/lateinit.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 const late: typeof ctx = ctx.derive();
 const b = lateinit<B>();

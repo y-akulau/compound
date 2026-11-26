@@ -13,7 +13,7 @@
 A short choice can be written directly in the `attach` call.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { SendGrid } from "./infra/email/send-grid.js";
 import { Smtp } from "./infra/email/smtp.js";
@@ -22,7 +22,7 @@ type EmailConfig =
     | { readonly provider: "smtp"; readonly url: string }
     | { readonly provider: "sendGrid"; readonly apiKey: string };
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("config", {
     email: {
@@ -91,12 +91,12 @@ export const createEmailSender = (deps: EmailSenderDeps): IEmailSender => {
 
 ```ts
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import { emailConfig } from "./infra/email/config.js";
 import { createEmailSender } from "./infra/email/factory.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("config", {
     email: {
@@ -114,12 +114,12 @@ Attach `undefined` and inject a dependency as an optional one. The name stays in
 
 ```ts
 // main.ts
-import { compound, type Compound } from "compound";
+import { SimpleCompound, type Compound } from "compound";
 
 import type { Metrics } from "./app/metrics.js";
 import { CloudMetrics } from "./infra/cloud-metrics.js";
 
-const ctx: Compound = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("config", {
     metrics: true

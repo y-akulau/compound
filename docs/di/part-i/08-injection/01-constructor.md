@@ -38,13 +38,13 @@ export class UserService {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
 import { UserService } from "./app/user-service.js";
 import { PostgresUserRepository } from "./infra/user-repository.js";
 import { BcryptHasher } from "./infra/hasher.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("userRepository", new PostgresUserRepository(ctx.components));
 ctx.attach("hasher", new BcryptHasher());

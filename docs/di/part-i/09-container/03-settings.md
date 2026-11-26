@@ -52,9 +52,9 @@ export async function parseConfig() {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { parseConfig } from "./config.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("config", await parseConfig());
 ```

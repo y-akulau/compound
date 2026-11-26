@@ -88,14 +88,14 @@ export async function createUser(ctx: CreateUserContext): Promise<void> {
 ```ts
 // main.ts
 import http from "node:http";
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
 import { UserRepository } from "./user-repository.js";
 import { EventRepository } from "./event-repository.js";
 import { CreateUserInput, createUser } from "./create-user.js";
 
-const app = compound();
+const app: SimpleCompound = new SimpleCompound();
 // Singleton components
 app.attach("config", {
     http: {

@@ -9,10 +9,10 @@ Nothing is disposed automatically — the application decides when and how to cl
 ## Manual cleanup
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
 
 // ...
@@ -26,7 +26,7 @@ Components that implement `Symbol.dispose` / `Symbol.asyncDispose` declare their
 
 ```ts
 // app-events.ts
-import { ComponentName } from "compound";
+import { SimpleCompound, ComponentName } from "compound";
 
 import { type Logger } from "./logger.js";
 
@@ -57,12 +57,12 @@ export async function dispose(components: Readonly<Record<string, unknown> & { l
 ```
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Worker } from "node:worker_threads";
 
 import { dispose } from "./app-events.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("emailJob", new Worker("./scripts/email-job.js"));
 ctx.attach("exportJob", new Worker("./scripts/export-job.js"));
 
@@ -74,12 +74,12 @@ await dispose(ctx.components);
 When a component has no disposal of its own, attach a dedicated cleanup component. The convention stays the same.
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
 import { dispose } from "./app-events.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 ctx.attach("db", new Pool({ connectionString: "postgres://..." }));
 ctx.attach("db.end", {
     [Symbol.asyncDispose]: async () => await ctx.components.db.end(),

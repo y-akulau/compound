@@ -11,9 +11,9 @@ Despite the conventional DI term, `attach` does not register a component in the 
 ## Attach a value
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("logger", console);
 ctx.attach("port", 3000);
@@ -24,7 +24,7 @@ ctx.components.logger.log(ctx.components.port);
 ## Symbol names
 
 ```ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
 const DB = Symbol("db");
@@ -136,14 +136,14 @@ export class UserService {
 
 ```ts
 // main.ts
-import { compound } from "compound";
+import { SimpleCompound } from "compound";
 import { Pool } from "pg";
 
 import { UserService } from "./app/user-service.js";
 import { PostgresUserRepository } from "./infra/user-repository.js";
 import { BcryptHasher } from "./infra/hasher.js";
 
-const ctx = compound();
+const ctx: SimpleCompound = new SimpleCompound();
 
 ctx.attach("config", { dbUrl: "postgres://..." });
 ctx.attach("db", new Pool(ctx.components.config.dbUrl));
