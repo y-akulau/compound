@@ -18,8 +18,11 @@ export interface Compound<T extends Components = {}> {
         component: C,
     ): asserts this is Compound<T & Record<N, C>>;
 
-    derive(): Compound<T>;
+    derive(): DerivedCompound<T>;
 }
+
+export type ComponentsOf<C extends Compound> =
+    C extends Compound<infer T> ? T : never;
 
 export class ComponentAlreadyAttached extends Error {
     constructor(name: ComponentName) {
@@ -57,7 +60,7 @@ export class SimpleCompound<T extends Components = {}> implements Compound<T> {
         });
     }
 
-    derive(): Compound<T> {
+    derive(): DerivedCompound<T> {
         return new DerivedCompound(this.components);
     }
 }
@@ -95,9 +98,18 @@ export class DerivedCompound<B extends Components, T extends Components = {}>
         });
     }
 
-    derive(): Compound<B & T> {
+    derive(): DerivedCompound<B & T> {
         return new DerivedCompound(this.components);
     }
 }
 
-export const compound = (): Compound => new SimpleCompound();
+export type DerivedCompoundFrom<C extends Compound> = DerivedCompound<
+    ComponentsOf<C>
+>;
+
+export type OwnComponentsOf<C extends Compound> =
+    C extends DerivedCompound<any, infer T>
+        ? T
+        : C extends SimpleCompound<infer T>
+          ? T
+          : never;
